@@ -1,0 +1,14 @@
+{
+    "name": "V3",
+    "operation": "Create",
+    "type": "Regular", 	
+    "enabled": true,
+    "closed" : false,
+    "scripts": [
+		{
+			"name": "Create.sql",
+			"tags": [],
+		}
+	],
+    "tags" : []
+}
