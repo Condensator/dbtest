@@ -3,7 +3,7 @@ import groovy.json.*
 
 def dbMaestroParameters = \
               [ \
-              jarPath: "C:\\apps\\DBmaestro\\TeamWork\\TeamWorkOracleServer\\Automation\\DBmaestroAgent.jar", \
+              jarPath: "E:\\Downloads\\artifact (22)\\DOP-X-Main\\6745\\Release\\AutomationTools\\DBmaestroAgent.jar", \
               projectName: "HR_BYTASK", \
               rsEnvName: "Release Source", \
               authType: "DBmaestroAccount", \
