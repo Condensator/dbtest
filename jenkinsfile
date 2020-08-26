@@ -1,0 +1,63 @@
+@Library('dbmaestro')
+import groovy.json.*
+
+def dbMaestroParameters = \
+              [ \
+              jarPath: "C:\\apps\\DBmaestro\\TeamWork\\TeamWorkOracleServer\\Automation\\DBmaestroAgent.jar", \
+              projectName: "HR_BYTASK", \
+              rsEnvName: "Release Source", \
+              authType: "DBmaestroAccount", \
+              userName: "peretzr@dbmaestro.com", 
+              authToken: "vVk9JtrvhhhVNHxXraTthTEtknQHCjTF", \
+              server: "localhost", \
+              packageDir: "C:\\apps\\DBmaestro\\Scripts\\TRAIN\\HR_BYTASK\\AUTO_PACKAGE", 
+              rsSchemaName: "HR_BYTASK_RS", \
+              packagePrefix: "V.tada.", \
+              wsURL: "localhost:8016", \
+              wsUserName: "peretzr@dbmaestro.com", 
+              wsPassword: "123456", \
+              wsUseHttps: false,
+              useZipPackaging: true, \
+              archiveArtifact: true, \
+              fileFilter: "Database\\*.sql", \
+              packageHintPath: "Database\\package.json" ]
+
+pipeline {
+              agent any
+              stages {
+                             stage('Package Preparation') {
+                                           steps {
+                                                          script {
+                                                                        dbmaestro.parameters = dbMaestroParameters
+                                                                        dbmaestro.prepPackageFromGitCommit()
+                                                          }
+                                           }
+                             }
+                             stage('Package Creation') {
+                                           steps {
+                                                          script {
+                                                                        dbmaestro.parameters = dbMaestroParameters
+                                                                        dbmaestro.createPackage()
+                                                          }
+                                           }
+                             }
+                             /*/*
+                             stage('Upgrade Release Source') {
+                                           steps {
+                                                          script {
+                                                                        dbmaestro.parameters = dbMaestroParameters
+                                                                        dbmaestro.upgradeReleaseSource()
+                                                          }
+                                           }
+                             }
+                             stage('lib testing') {
+                                           steps {
+                                                          script {
+                                                                        dbmaestro.parameters = dbMaestroParameters
+                                                                        dbmaestro.composePackage()
+                                                          }
+                                           }
+                             }
+                             */
+              }
+}
