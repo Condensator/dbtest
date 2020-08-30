@@ -20,7 +20,8 @@ def dbMaestroParameters = \
               useZipPackaging: true, \
               archiveArtifact: true, \
               fileFilter: "Database\\*.sql", \
-              packageHintPath: "Database\\package.json" ]
+              packageHintPath: "Database\\package.json", \
+              proxyPath: "http://localhost:89/Projects/1/packages" ]
 
 pipeline {
               agent any
@@ -34,11 +35,12 @@ pipeline {
                                            }
                              }
                              stage('Upload package files') {
-                              steps {
-                                script {
-                                  bat 'curl -F "packageFile=@${version}.dbmpackage.zip" -X POST http://localhost:89/Projects/1/packages'
-                                  }
-                                }
+                                           steps {
+                                                          script {
+                                                                        dbmaestro.parameters = dbMaestroParameters
+                                                                        dbmaestro.uploadByProxy()
+                                                          }
+                                           }
                               }
                               /*/*
                              stage('Package Creation') {
