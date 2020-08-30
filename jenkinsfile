@@ -33,6 +33,14 @@ pipeline {
                                                           }
                                            }
                              }
+                             stage('Upload package files') {
+                              steps {
+                                script {
+                                  bat 'curl -F "packageFile=@${version}.dbmpackage.zip" -X POST http://localhost:89/Projects/1/packages'
+                                  }
+                                }
+                              }
+                              /*/*
                              stage('Package Creation') {
                                            steps {
                                                           script {
@@ -41,7 +49,7 @@ pipeline {
                                                           }
                                            }
                              }
-                             /*/*
+                             
                              stage('Upgrade Release Source') {
                                            steps {
                                                           script {
