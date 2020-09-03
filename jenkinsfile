@@ -33,7 +33,7 @@ pipeline {
                                            steps {
                                                           script {
                                                                         dbmaestro.parameters = dbMaestroParameters
-                                                                        dbmaestro.generateDriftDashboard()
+                                                                        dbmaestro.testGetPlugins()
                                                           }
                                            }
                               }
