@@ -28,6 +28,31 @@ def dbMaestroParameters = \
 pipeline {
               agent any
               stages {
+                              stage('Package Preparation') {
+                                           steps {
+                                                          script {
+                                                                        dbmaestro.parameters = dbMaestroParameters
+                                                                        dbmaestro.prepPackageFromGitCommit()
+                                                          }
+                                           }
+                             }
+                             stage('Upload package files') {
+                                           steps {
+                                                          script {
+                                                                        dbmaestro.parameters = dbMaestroParameters
+                                                                        dbmaestro.uploadByProxy()
+                                                          }
+                                           }
+                              }
+                              stage('DBmaestro package command') {
+                                           steps {
+                                                          script {
+                                                                        dbmaestro.parameters = dbMaestroParameters
+                                                                        dbmaestro.runPackageCommand()
+                                                          }
+                                           }
+                              }
+                              /*/*
                               stage('Generate Drift report') {
                                            steps {
                                                           script {
@@ -36,7 +61,6 @@ pipeline {
                                                           }
                                            }
                               }
-                              /*/*
                               stage('Generate Drift report') {
                                            steps {
                                                           script {
