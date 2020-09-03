@@ -50,6 +50,14 @@ pipeline {
                                                           }
                                            }
                               }
+                              stage('Generate Drift report') {
+                                           steps {
+                                                          script {
+                                                                        dbmaestro.parameters = dbMaestroParameters
+                                                                        dbmaestro.generateDriftDashboard()
+                                                          }
+                                           }
+                              }
                               /*/*
                              stage('Package Creation') {
                                            steps {
