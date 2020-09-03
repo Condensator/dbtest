@@ -21,7 +21,9 @@ def dbMaestroParameters = \
               archiveArtifact: true, \
               fileFilter: "Database\\*.sql", \
               packageHintPath: "Database\\package.json", \
-              proxyPath: "http://localhost:89/Projects/1/packages" ]
+              proxyPath: "http://localhost:89/Projects/1/packages", \
+              driftDashboard: [[name: "HR_BYTASK", environments: ["Release Source", "QA_Env_1", "Prod_Env_1"]]
+              ]]
 
 pipeline {
               agent any
