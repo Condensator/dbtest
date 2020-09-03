@@ -26,7 +26,17 @@ def dbMaestroParameters = \
 pipeline {
               agent any
               stages {
-                             stage('Package Preparation') {
+                             
+                              stage('Generate Drift report') {
+                                           steps {
+                                                          script {
+                                                                        dbmaestro.parameters = dbMaestroParameters
+                                                                        dbmaestro.generateDriftDashboard()
+                                                          }
+                                           }
+                              }
+                              /*/*
+                              stage('Package Preparation') {
                                            steps {
                                                           script {
                                                                         dbmaestro.parameters = dbMaestroParameters
@@ -50,15 +60,6 @@ pipeline {
                                                           }
                                            }
                               }
-                              stage('Generate Drift report') {
-                                           steps {
-                                                          script {
-                                                                        dbmaestro.parameters = dbMaestroParameters
-                                                                        dbmaestro.generateDriftDashboard()
-                                                          }
-                                           }
-                              }
-                              /*/*
                              stage('Package Creation') {
                                            steps {
                                                           script {
