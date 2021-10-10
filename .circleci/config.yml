@@ -27,7 +27,7 @@ jobs:
             mkdir -p packages/crs
             cp "${files[@]}" packages/crs
       - dop/create-manifest-file:
-          path_to_scripts_folder: package
+          path_to_scripts_folder: packages
       - run:
           name: Prepare package zip
           command: cd packages&&zip -r ../V$CIRCLE_BUILD_NUM.zip *&&cd ..
