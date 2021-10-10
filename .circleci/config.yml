@@ -19,14 +19,18 @@ jobs:
       - checkout
       - dop/download-automation-jar
       - run:
-          name: Prepare package zip
+          name: Get package scripts
           command: | 
             files=`git diff --name-only --diff-filter=AM HEAD~1..HEAD -- Scripts\*.sql`
             echo $files
             rm -rf packages || true
             mkdir -p packages/crs
             cp "${files[@]}" packages/crs
-            cd packages&&zip -r ../V$CIRCLE_BUILD_NUM.zip *&&cd ..
+      - dop/create-manifest-file:
+          path_to_scripts_folder: package
+      - run:
+          name: Prepare package zip
+          command: cd packages&&zip -r ../V$CIRCLE_BUILD_NUM.zip *&&cd ..
       - dop/package:
           file_path: V$CIRCLE_BUILD_NUM.zip
           project_name: CircleCI Project
@@ -74,5 +78,11 @@ workflows:
     jobs:
       - create-package
       - pre-check-package
+        requires:
+          - create-package
       - upgrade-rs
+        requires:
+          - pre-check-package
       - validate-prod
+        requires:
+          - upgrade-rs
