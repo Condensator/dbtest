@@ -15,27 +15,54 @@ jobs:
       - checkout
       - dop/download-automation-jar
       - run:
-          name: Get latest script updates
+          name: Prepare package zip
           command: | 
             files=`git diff --name-only --diff-filter=AM HEAD~1..HEAD -- Scripts\*.sql`
             echo $files
-      - run:
-          name: Clean packages folder
-          command: |
             rm -rf packages || true
             mkdir -p packages/crs
-      - run:
-          name: Copy new scripts to package folder
-          command:  |
-            echo $files
             cp "${files[@]}" packages/crs
-      - dop/create-manifest-file:
-          path_to_scripts_folder: packages
-      - run:
-          command: cd packages&&zip -r ../V$CIRCLE_BUILD_NUM.zip *&&cd ..
-          name: Zip the package
+            cd packages&&zip -r ../V$CIRCLE_BUILD_NUM.zip *&&cd ..
       - dop/package:
           file_path: V$CIRCLE_BUILD_NUM.zip
+          project_name: CircleCI Project
+  pre-check:
+    docker:
+      -iamge: 'cimg/openjdk:16.0.2'
+    environment:
+      DBMAESTRO_AUTH_TYPE: DBmaestroAccount
+      DBMAESTRO_SERVER_ADDRESS: '35.239.85.41:7017'
+      DBMAESTRO_USERNAME: test@dbmaestro.com
+    steps:
+      - dop/download-automation-jar
+      - dop/pre-check:
+          package_name: "@latest"
+          project_name: CircleCI Project
+  upgrade-rs:
+    docker:
+      -iamge: 'cimg/openjdk:16.0.2'
+    environment:
+      DBMAESTRO_AUTH_TYPE: DBmaestroAccount
+      DBMAESTRO_SERVER_ADDRESS: '35.239.85.41:7017'
+      DBMAESTRO_USERNAME: test@dbmaestro.com
+    steps:
+      - dop/download-automation-jar
+      - dop/upgrade:
+          environment_name: Release Source
+          package_name: "@latest"
+          project_name: CircleCI Project
+  validate-prod:
+    docker:
+      -iamge: 'cimg/openjdk:16.0.2'
+    environment:
+      DBMAESTRO_AUTH_TYPE: DBmaestroAccount
+      DBMAESTRO_SERVER_ADDRESS: '35.239.85.41:7017'
+      DBMAESTRO_USERNAME: test@dbmaestro.com
+    steps:
+      - dop/download-automation-jar
+      - dop/validate:
+          environment_name: Prod_Env_1
+          package_name: "@current"
           project_name: CircleCI Project
 
 workflows:
