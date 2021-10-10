@@ -44,7 +44,7 @@ jobs:
     steps:
       - dop/download-automation-jar
       - dop/pre-check:
-          package_name: "@currentversion"
+          package_name: "@latestversion"
           project_name: CircleCI Project
 
   upgrade-rs:
