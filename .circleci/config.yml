@@ -26,6 +26,7 @@ jobs:
       - dop/package:
           file_path: V$CIRCLE_BUILD_NUM.zip
           project_name: CircleCI Project
+
   pre-check-package:
     docker:
       -iamge: 'cimg/openjdk:16.0.2'
@@ -38,6 +39,7 @@ jobs:
       - dop/pre-check:
           package_name: "@latest"
           project_name: CircleCI Project
+
   upgrade-rs:
     docker:
       -iamge: 'cimg/openjdk:16.0.2'
@@ -51,6 +53,7 @@ jobs:
           environment_name: Release Source
           package_name: "@latest"
           project_name: CircleCI Project
+
   validate-prod:
     docker:
       -iamge: 'cimg/openjdk:16.0.2'
