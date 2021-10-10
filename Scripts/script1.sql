@@ -6,3 +6,4 @@ CREATE TABLE `customers` (
   `surname` VARCHAR(45) NULL,
   `city` VARCHAR(45) NULL,
   PRIMARY KEY (`customer_id`));
+  
