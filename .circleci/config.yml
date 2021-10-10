@@ -26,7 +26,7 @@ jobs:
       - dop/package:
           file_path: V$CIRCLE_BUILD_NUM.zip
           project_name: CircleCI Project
-  pre-check:
+  pre-check-package:
     docker:
       -iamge: 'cimg/openjdk:16.0.2'
     environment:
@@ -69,3 +69,6 @@ workflows:
   test-run:
     jobs:
       - create-package
+      - pre-check-package
+      - upgrade-rs
+      - validate-prod
