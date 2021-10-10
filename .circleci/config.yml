@@ -17,8 +17,8 @@ jobs:
       - run:
           name: Get latest script updates
           command: | 
-          files=`git diff --name-only --diff-filter=AM HEAD~1..HEAD -- Scripts\*.sql`
-          echo $files
+            files=`git diff --name-only --diff-filter=AM HEAD~1..HEAD -- Scripts\*.sql`
+            echo $files
       - run:
           name: Clean packages folder
           command: |
@@ -27,8 +27,8 @@ jobs:
       - run:
           name: Copy new scripts to package folder
           command:  |
-          echo $files
-          cp "${files[@]}" packages/crs
+            echo $files
+            cp "${files[@]}" packages/crs
       - dop/create-manifest-file:
           path_to_scripts_folder: packages
       - run:
