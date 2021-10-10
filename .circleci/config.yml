@@ -29,7 +29,7 @@ jobs:
 
   pre-check-package:
     docker:
-      -iamge: 'cimg/openjdk:16.0.2'
+      -image: 'cimg/openjdk:16.0.2'
     environment:
       DBMAESTRO_AUTH_TYPE: DBmaestroAccount
       DBMAESTRO_SERVER_ADDRESS: '35.239.85.41:7017'
@@ -42,7 +42,7 @@ jobs:
 
   upgrade-rs:
     docker:
-      -iamge: 'cimg/openjdk:16.0.2'
+      -image: 'cimg/openjdk:16.0.2'
     environment:
       DBMAESTRO_AUTH_TYPE: DBmaestroAccount
       DBMAESTRO_SERVER_ADDRESS: '35.239.85.41:7017'
@@ -56,7 +56,7 @@ jobs:
 
   validate-prod:
     docker:
-      -iamge: 'cimg/openjdk:16.0.2'
+      -image: 'cimg/openjdk:16.0.2'
     environment:
       DBMAESTRO_AUTH_TYPE: DBmaestroAccount
       DBMAESTRO_SERVER_ADDRESS: '35.239.85.41:7017'
