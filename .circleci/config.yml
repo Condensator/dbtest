@@ -77,12 +77,12 @@ workflows:
   test-run:
     jobs:
       - create-package
-      - pre-check-package
-        requires:
-          - create-package
-      - upgrade-rs
-        requires:
-          - pre-check-package
-      - validate-prod
-        requires:
-          - upgrade-rs
+      - pre-check-package:
+          requires:
+            - create-package
+      - upgrade-rs:
+          requires:
+            - pre-check-package
+      - validate-prod:
+          requires:
+            - upgrade-rs

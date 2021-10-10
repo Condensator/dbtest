@@ -7,4 +7,3 @@ CREATE TABLE `customers` (
   `city` VARCHAR(45) NULL,
   PRIMARY KEY (`customer_id`));
   
-  
