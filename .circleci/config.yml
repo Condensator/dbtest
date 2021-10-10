@@ -16,7 +16,9 @@ jobs:
       - dop/download-automation-jar
       - run:
           name: Get latest script updates
-          command: files=`git diff --name-only --diff-filter=AM HEAD~1..HEAD -- Scripts\*.sql`
+          command: | 
+          files=`git diff --name-only --diff-filter=AM HEAD~1..HEAD -- Scripts\*.sql`
+          echo $files
       - run:
           name: Clean packages folder
           command: |
@@ -24,7 +26,9 @@ jobs:
             mkdir -p packages/crs
       - run:
           name: Copy new scripts to package folder
-          command:  cp "${files[@]}" packages/crs
+          command:  |
+          echo $files
+          cp "${files[@]}" packages/crs
       - dop/create-manifest-file:
           path_to_scripts_folder: packages
       - run:
