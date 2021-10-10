@@ -1,0 +1,40 @@
+version: 2.1
+
+orbs:
+  dop: dbmaestro/devops-automation@1.0.0
+
+jobs:
+  create-package:
+    docker:
+      - image: 'cimg/openjdk:16.0.2'
+    environment:
+      DBMAESTRO_AUTH_TYPE: DBmaestroAccount
+      DBMAESTRO_SERVER_ADDRESS: '35.239.85.41:7017'
+      DBMAESTRO_USERNAME: test@dbmaestro.com
+    steps:
+      - checkout
+      - dop/download-automation-jar
+      - run:
+          name: Get latest script updates
+          command: files=`git diff --name-only --diff-filter=AM HEAD~1..HEAD -- Scripts\*.sql`
+      - run:
+          name: Clean packages folder
+          command: |
+            rm -rf packages || true
+            mkdir -p packages/crs
+      - run:
+          name: Copy new scripts to package folder
+          command:  cp "${files[@]}" packages/crs
+      - dop/create-manifest-file:
+          path_to_scripts_folder: packages
+      - run:
+          command: cd packages&&zip -r ../V$CIRCLE_BUILD_NUM.zip *&&cd ..
+          name: Zip the package
+      - dop/package:
+          file_path: V$CIRCLE_BUILD_NUM.zip
+          project_name: CircleCI Project
+
+workflows:
+  test-run:
+    jobs:
+      - create-package
