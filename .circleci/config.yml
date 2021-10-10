@@ -3,10 +3,14 @@ version: 2.1
 orbs:
   dop: dbmaestro/devops-automation@1.0.0
 
-jobs:
-  create-package:
+executors:
+  default:
     docker:
       - image: 'cimg/openjdk:16.0.2'
+
+jobs:
+  create-package:
+    executor: default
     environment:
       DBMAESTRO_AUTH_TYPE: DBmaestroAccount
       DBMAESTRO_SERVER_ADDRESS: '35.239.85.41:7017'
@@ -28,8 +32,7 @@ jobs:
           project_name: CircleCI Project
 
   pre-check-package:
-    docker:
-      -iamge: 'cimg/openjdk:16.0.2'
+    executor: default
     environment:
       DBMAESTRO_AUTH_TYPE: DBmaestroAccount
       DBMAESTRO_SERVER_ADDRESS: '35.239.85.41:7017'
@@ -41,8 +44,7 @@ jobs:
           project_name: CircleCI Project
 
   upgrade-rs:
-    docker:
-      -iamge: 'cimg/openjdk:16.0.2'
+    executor: default
     environment:
       DBMAESTRO_AUTH_TYPE: DBmaestroAccount
       DBMAESTRO_SERVER_ADDRESS: '35.239.85.41:7017'
@@ -55,8 +57,7 @@ jobs:
           project_name: CircleCI Project
 
   validate-prod:
-    docker:
-      -iamge: 'cimg/openjdk:16.0.2'
+    executor: default
     environment:
       DBMAESTRO_AUTH_TYPE: DBmaestroAccount
       DBMAESTRO_SERVER_ADDRESS: '35.239.85.41:7017'
