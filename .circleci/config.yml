@@ -44,7 +44,7 @@ jobs:
     steps:
       - dop/download-automation-jar
       - dop/pre-check:
-          package_name: "@latest"
+          package_name: "@currentversion"
           project_name: CircleCI Project
 
   upgrade-rs:
@@ -57,7 +57,7 @@ jobs:
       - dop/download-automation-jar
       - dop/upgrade:
           environment_name: Release Source
-          package_name: "@latest"
+          package_name: "@latestversion"
           project_name: CircleCI Project
 
   validate-prod:
@@ -70,7 +70,7 @@ jobs:
       - dop/download-automation-jar
       - dop/validate:
           environment_name: Prod_Env_1
-          package_name: "@current"
+          package_name: "@currentversion"
           project_name: CircleCI Project
 
 workflows:
